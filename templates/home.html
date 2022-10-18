@@ -1,0 +1,83 @@
+<h2 style="text-align: center;"><strong>mentorama</strong> <span style="color: #0000ff;">-</span> Data Science PRO</h2>
+<p style="text-align: center;">Minha primeira API!</p>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>
+<h1 style="text-align: center;">mentorama<span style="color: #0000ff;">.</span></h1>
+
+<div class="login">
+    
+<form id="preditionForm" method='POST'>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;">.<input type="number" step="0.01" defaultValue="1" required="required" />.</h1>
+<h1 style="text-align: center;"><button type= "submit" class= "btn btn-primary btn-block btn-large">Predict</button></h1>
+</form>
+  
+<p style="text-align: center;">&nbsp;</p>
+ 
+.<h2 style="text-align: center;"><strong>Regressão Linear:</strong><span id="lin_reg_prediction">.</span></h2>    
+.<h2 style="text-align: center;"><strong>KNN:</strong><span id="knn_prediction">.</span></h2>    
+
+<script>
+    const form = document.getElementById("preditionForm")
+    form.onsubmit = (e)=>{
+        e.preventDefault()
+    async function postData(url = '', data = {}) {
+    // Default options are marked with *
+        const response = await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+    }
+
+    postData('/predict', {features:getDataFromForm()})
+        .then((data) => {
+            console.log(data)
+            const {linReg:linRegPrediction = "", knn:knnPrediction=""} = data
+
+            const linReg = document.getElementById("lin_reg_prediction")
+            const knn = document.getElementById("knn_prediction")
+
+            linReg.textContent = linRegPrediction
+            knn.textContent = knnPrediction
+        });
+    }
+
+    function getDataFromForm(){
+        const form = document.getElementById("preditionForm")
+        const inputs = form.querySelectorAll("input")
+
+        const features = []
+        for(let i = 0; i<inputs.length;i++){
+            features.push(parseInt(inputs[i].value))
+        }
+
+        return features
+    }
+    console.log(getDataFromForm())
+</script>
+
+
